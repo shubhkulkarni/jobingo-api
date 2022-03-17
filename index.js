@@ -4,12 +4,13 @@ const { error } = require("./src/middlewares/error");
 const AppError = require("./src/utils/AppError");
 const router = require("./src/routes/router.config");
 dotenv.config({ path: "./config.env" });
+require("./database");
 const app = express();
 app.use(express.json());
 app.use(error);
 
 router.forEach(({ path, router }) => {
-  app.use(path, router);
+  app.use("/api" + path, router);
 });
 
 app.all("*", (req, res, next) => {
