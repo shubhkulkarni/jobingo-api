@@ -7,16 +7,21 @@ const userSchema = new Schema({
   email: {
     type: String,
     required: [true, "email is required"],
-    minlength: 5,
+    minlength: 3,
     unique: [true, "email address already exists"],
     validate: [validator.isEmail, "invalid email address"],
     lowercase: true,
     trim: true
   },
-  password: { type: String, required: true, minlength: 8, trim: true },
+  password: {
+    type: String,
+    required: [true, "password is required"],
+    minlength: 8,
+    trim: true
+  },
   confirmPassword: {
     type: String,
-    required: [true, "email is required"],
+    required: [true, "confirm password is required"],
     trim: true,
     validate: {
       validator(val) {
