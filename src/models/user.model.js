@@ -17,7 +17,8 @@ const userSchema = new Schema({
     type: String,
     required: [true, "password is required"],
     minlength: 8,
-    trim: true
+    trim: true,
+    select: false
   },
   confirmPassword: {
     type: String,
@@ -48,6 +49,10 @@ userSchema.pre("save", async function (next) {
   this.confirmPassword = undefined;
   next();
 });
+
+userSchema.methods.matchPasswords = async function (reqPwd, userPwd) {
+  return await bcrypt.compare(reqPwd, userPwd);
+};
 
 const User = model("User", userSchema);
 
